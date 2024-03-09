@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Legends Store</title>
+    <link rel="stylesheet" href="../public/css/style.css">
+</head>
+<body>
+    <div class="navbar">
+        <div class="">
+            <img class="logo" src="../src/logo.png" alt="">
+            <nav>
+                <ul>
+                    <li>Produtos</li>
+                    <li>Minha Conta</li>
+                    <li>Carrinho</li>
+                </ul>
+            </nav>
+            <div class="nav-icon-container">
+                <img src="../src/carrinho-icon.png" alt="">
+                <img src="../src/mais.png" class="menu-button">
+            </div>
+        </div>
+    </div>
+    <header>
+        <div class="header-inner-content">
+            <div class="header-bottom-side">
+                <div class="header-bottom-side-left">
+                    <h2>Deia Um Novo Estilo ao Seu Trabalhol</h2>
+                    <p>
+                        Sucesso nem sempre ten haver com grandeza. Tem haver com consistência. Trabalho duro consistente supera o sucesso. grandeza virá.
+        
+                    </p>
+                    <button>Ver Agora &#8594;</button>
+                </div>
+                <div class="header-bottom-side-right"></div>
+            </div>
+        </div>
+    </header>   
+
+    <script>
+        const navbar = document.querySelector(".navbar");
+        const menuButton = document.querySelector(".menu-button");
+
+        menuButton.addEventListener('click', () => {
+            navbar.classList.toggle("show-menu");
+            
+        })
+    </script>
+</body>
+</html>
