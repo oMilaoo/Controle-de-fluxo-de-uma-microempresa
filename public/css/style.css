@@ -142,3 +142,42 @@ header{
         padding: 0.8rem;
     }
 } 
+
+/*carrinho*/
+main{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.container{
+    display: flex;
+    margin-top: 30px;
+    width: 95%;
+    height: 600px;
+    border: #1F0060 solid 2px;
+    gap: 10px;
+}
+
+.produtos{
+    width: 80%;
+    height: 150px;
+    display: flex;
+    border: #1F0060 solid 2px;
+    align-items: center;
+    text-align: center;
+}
+
+.linha{
+    display: flex;
+    text-align: center;
+    gap: 20px;
+}
+
+.cart-adicional{
+    background-color: #1F0060;
+    width: 20%;
+    height: 100%;
+    border: #1F0060 solid 2px;
+}
+
+
