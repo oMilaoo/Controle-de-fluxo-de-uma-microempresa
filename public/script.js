@@ -1,166 +1,120 @@
-// Array para armazenar os produtos no carrinho
-const cart = [];
-
-// Função para adicionar um produto ao carrinho
-function addToCart(product) {
-  cart.push(product);
-  updateCart();
+if (document.readyState == 'loading') {
+  document.addEventListener('DOMContentLoaded', ready)
+} else {
+  ready()
 }
 
-// Função para remover um produto do carrinho
-function removeFromCart(index) {
-  cart.splice(index, 1);
-  updateCart();
-}
+var totalAmount = "0,00"
 
-// Função para atualizar a exibição do carrinho
-function updateCart() {
-  const cartItems = document.querySelector('.cart-items');
-  cartItems.innerHTML = ''; // Limpa o conteúdo anterior
-
-  let subtotal = 0;
-  for (let i = 0; i < cart.length; i++) {
-    const product = cart[i];
-    const cartItem = document.createElement('li');
-    cartItem.classList.add('cart-item');
-
-    const image = document.createElement('img');
-    image.src = product.image;
-    cartItem.appendChild(image);
-
-    const name = document.createElement('span');
-    name.innerText = product.name;
-    cartItem.appendChild(name);
-
-    const price = document.createElement('span');
-    price.innerText = `R$ ${product.price}`;
-    cartItem.appendChild(price);
-
-    const quantity = document.createElement('input');
-    quantity.type = 'number';
-    quantity.value = product.quantity;
-    quantity.min = 1;
-    quantity.addEventListener('change', () => {
-      product.quantity = parseInt(quantity.value);
-      updateCart();
-    });
-    cartItem.appendChild(quantity);
-
-    const removeButton = document.createElement('button');
-    removeButton.innerText = 'Remover';
-    removeButton.addEventListener('click', () => removeFromCart(i));
-    cartItem.appendChild(removeButton);
-
-    cartItems.appendChild(cartItem);
-
-    subtotal += product.price * product.quantity;
+function ready() {
+  // Botão remover produto
+  const removeCartProductButtons = document.getElementsByClassName("remove-product-button")
+  for (var i = 0; i < removeCartProductButtons.length; i++) {
+    removeCartProductButtons[i].addEventListener("click", removeProduct)
   }
 
-  // Calcula e exibe valores de subtotal, frete, impostos e total
-  const shipping = calculateShipping(subtotal);
-  const taxes = calculateTaxes(subtotal);
-  const total = subtotal + shipping + taxes;
-
-  document.getElementById('subtotal').innerText = `R$ ${subtotal}`;
-  document.getElementById('shipping').innerText = `R$ ${shipping}`;
-  document.getElementById('taxes').innerText = `R$ ${taxes}`;
-  document.getElementById('total').innerText = `R$ ${total}`;
-}
-
-// Função para calcular o frete
-function calculateShipping(subtotal) {
-  if (subtotal >= 100) {
-    return 0;
-  } else {
-    return 5;
+  // Mudança valor dos inputs
+  const quantityInputs = document.getElementsByClassName("product-qtd-input")
+  for (var i = 0; i < quantityInputs.length; i++) {
+    quantityInputs[i].addEventListener("change", checkIfInputIsNull)
   }
+
+  // Botão add produto ao carrinho
+  const addToCartButtons = document.getElementsByClassName("button-hover-background")
+  for (var i = 0; i < addToCartButtons.length; i++) {
+    addToCartButtons[i].addEventListener("click", addProductToCart)
+  }
+
+  // Botão comprar
+  const purchaseButton = document.getElementsByClassName("purchase-button")[0]
+  purchaseButton.addEventListener("click", makePurchase)
 }
 
-// Função para calcular os impostos
-function calculateTaxes(subtotal) {
-  return subtotal * 0.1;
+function removeProduct(event) {
+  event.target.parentElement.parentElement.remove()
+  updateTotal()
 }
 
-// Função para finalizar a compra
-function checkout() {
-  // TODO: Implementar a lógica de finalizar a compra
-  alert('Compra finalizada com sucesso!');
+function checkIfInputIsNull(event) {
+  if (event.target.value === "0") {
+    event.target.parentElement.parentElement.remove()
+  }
+
+  updateTotal()
 }
 
-// Adiciona eventos aos botões de checkout
-const checkoutButton = document.getElementById('checkout-button');
-checkoutButton.addEventListener('click', checkout);
+function addProductToCart(event) {
+  const button = event.target
+  const productInfos = button.parentElement.parentElement
+  const productImage = productInfos.getElementsByClassName("product-image")[0].src
+  const productName = productInfos.getElementsByClassName("product-title")[0].innerText
+  const productPrice = productInfos.getElementsByClassName("product-price")[0].innerText
 
-// Exibe os produtos iniciais no carrinho
-const initialProducts = [
-  {
-    image: 'https://picsum.photos/200',
-    name: 'Produto 1',
-    price: 10,
-    quantity: 1,
-  },
-  {
-    image: 'https://picsum.photos/200',
-    name: 'Produto 2',
-    price: 20,
-    quantity: 2,
-  },
-];
+  const productsCartNames = document.getElementsByClassName("cart-product-title")
+  for (var i = 0; i < productsCartNames.length; i++) {
+    if (productsCartNames[i].innerText === productName) {
+      productsCartNames[i].parentElement.parentElement.getElementsByClassName("product-qtd-input")[0].value++
+      updateTotal()
+      return
+    }
+  }
 
-cart.push(...initialProducts);
-updateCart();
+  let newCartProduct = document.createElement("tr")
+  newCartProduct.classList.add("cart-product")
 
-//------------------------------------------------------
-// Array de produtos
-const products = [
-  {
-    image: 'https://picsum.photos/200',
-    name: 'Produto 1',
-    price: 10,
-  },
-  {
-    image: 'https://picsum.photos/200',
-    name: 'Produto 2',
-    price: 20,
-  },
-  {
-    image: 'https://picsum.photos/200',
-    name: 'Produto 3',
-    price: 30,
-  },
-];
+  newCartProduct.innerHTML =
+    `
+      <td class="product-identification">
+        <img src="${productImage}" alt="${productName}" class="cart-product-image">
+        <strong class="cart-product-title">${productName}</strong>
+      </td>
+      <td>
+        <span class="cart-product-price">${productPrice}</span>
+      </td>
+      <td>
+        <input type="number" value="1" min="0" class="product-qtd-input">
+        <button type="button" class="remove-product-button">Remover</button>
+      </td>
+    `
+  
+  const tableBody = document.querySelector(".cart-table tbody")
+  tableBody.append(newCartProduct)
+  updateTotal()
 
-// Função para exibir os produtos
-function renderProducts() {
-  const productsContainer = document.querySelector('.products-container');
-  productsContainer.innerHTML = ''; // Limpa o conteúdo anterior
+  newCartProduct.getElementsByClassName("remove-product-button")[0].addEventListener("click", removeProduct)
+  newCartProduct.getElementsByClassName("product-qtd-input")[0].addEventListener("change", checkIfInputIsNull)
+}
 
-  for (const product of products) {
-    const productCard = document.createElement('div');
-    productCard.classList.add('product-card');
+function makePurchase() {
+  if (totalAmount === "0,00") {
+    alert("Seu carrinho está vazio!")
+  } else {   
+    alert(
+      `
+        Obrigado pela sua compra!
+        Valor do pedido: R$${totalAmount}\n
+        Volte sempre :)
+      `
+    )
 
-    const image = document.createElement('img');
-    image.src = product.image;
-    productCard.appendChild(image);
-
-    const name = document.createElement('h2');
-    name.innerText = product.name;
-    productCard.appendChild(name);
-
-    const price = document.createElement('p');
-    price.innerText = `R$ ${product.price}`;
-    productCard.appendChild(price);
-
-    const button = document.createElement('button');
-    button.innerText = 'Adicionar ao Carrinho';
-    button.addEventListener('click', () => {
-      // TODO: Adicionar o produto ao carrinho
-      alert(`Produto ${product.name} adicionado ao carrinho!`);
-    });
-    productCard.appendChild(button);
-
-    productsContainer.appendChild(productCard);
+    document.querySelector(".cart-table tbody").innerHTML = ""
+    updateTotal()
   }
 }
 
-renderProducts();
+// Atualizar o valor total do carrinho
+function updateTotal() {
+  const cartProducts = document.getElementsByClassName("cart-product")
+  totalAmount = 0
+
+  for (var i = 0; i < cartProducts.length; i++) {
+    const productPrice = cartProducts[i].getElementsByClassName("cart-product-price")[0].innerText.replace("R$", "").replace(",", ".")
+    const productQuantity = cartProducts[i].getElementsByClassName("product-qtd-input")[0].value
+
+    totalAmount += productPrice * productQuantity
+  }
+  
+  totalAmount = totalAmount.toFixed(2)
+  totalAmount = totalAmount.replace(".", ",")
+  document.querySelector(".cart-total-container span").innerText = "R$" + totalAmount
+}
