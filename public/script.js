@@ -1,110 +1,71 @@
-document.addEventListener('DOMContentLoaded', () => {
-  const addToCartButtons = document.querySelectorAll('.add-to-cart');
-  const cartItemCount = document.querySelector('.cart-icon span');
-  const cartItemsList = document.querySelector('.cart-menu .cart-items');
-  const cartTotal = document.querySelector('.cart-total');
-  const cartIcon = document.querySelector('.cart-icon');
-  const sidebar = document.getElementById('sidebar');
-  const mainElement = document.querySelector('main'); // Seleciona a tag main
-  const coverElement = document.querySelector('.cover'); // Seleciona a div com a classe cover
-  const otherElementToHide = document.querySelector('.element-to-hide'); // Seleciona o elemento que deseja ocultar
-  const modal = document.getElementById('modal'); // Seleciona o modal
+function toggleCardInput() {
+  var paymentMethod = document.getElementById('paymentMethod').value;
+  var cardNumberInput = document.getElementById('cardNumberInput');
+  
+  if (paymentMethod === 'credit' || paymentMethod === 'debit') {
+      cardNumberInput.style.display = 'block';
+      formatCardNumberInput(); // Formatar o número do cartão se estiver visível
+  } else {
+      cardNumberInput.style.display = 'none';
+  }
+}
 
-  let cartItems = [];
-  let totalAmount = 0;
-
-  addToCartButtons.forEach((button, index) => {
-    button.addEventListener('click', (event) => {
-      const card = button.closest('.card');
-      const itemName = card.querySelector('.card--title').textContent;
-      const itemPriceText = card.querySelector('.price').textContent;
-      const itemPrice = parseFloat(itemPriceText.replace('R$', ''));
-      const item = {
-        name: itemName,
-        price: itemPrice,
-        quantity: 1,
-      };
-
-      const existingItem = cartItems.find(cartItem => cartItem.name === item.name);
-      if (existingItem) {
-        existingItem.quantity++;
-      } else {
-        cartItems.push(item);
-      }
-
-      totalAmount += item.price;
-
-      updateCartUI();
-    });
+// Função para formatar o número do cartão
+function formatCardNumberInput() {
+  var cardNumberInput = document.getElementById('cardNumber');
+  cardNumberInput.addEventListener('input', function() {
+      var value = cardNumberInput.value.replace(/\D/g, '');
+      value = value.replace(/(\d{4})(?=\d)/g, '$1 ');
+      cardNumberInput.value = value;
   });
+}
 
-  function updateCartUI() {
-    updateCartItemCount(cartItems.length);
-    updateCartItemList();
-    updateCartTotal();
+// Função para formatar o CPF
+function formatCPFInput() {
+  console.log("Formatando CPF...");
+  var cpfInput = document.getElementById('cpf');
+  var value = cpfInput.value.replace(/\D/g, ''); // Remove caracteres não numéricos
+  var newValue = value.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4'); // Formata o CPF
+  cpfInput.value = newValue;
+}
+
+// Função para formatar o número do cartão
+function formatCardNumberInput() {
+  console.log("Formatando número do cartão...");
+  var cardNumberInput = document.getElementById('cardNumber');
+  var value = cardNumberInput.value.replace(/\D/g, ''); // Remove caracteres não numéricos
+  var newValue = value.replace(/(\d{4})(?=\d)/g, '$1 '); // Adiciona espaço a cada 4 caracteres
+  cardNumberInput.value = newValue;
+}
+
+// Função para verificar se o número do cartão possui o formato correto
+function isValidCardNumber() {
+  console.log("Validando número do cartão...");
+  var cardNumberInput = document.getElementById('cardNumber');
+  var pattern = /^[0-9]{4} [0-9]{4} [0-9]{4} [0-9]{4}$/;
+  return pattern.test(cardNumberInput.value);
+}
+
+// Função para verificar se o CPF possui o formato correto
+function isValidCPF() {
+  console.log("Validando CPF...");
+  var cpfInput = document.getElementById('cpf');
+  var pattern = /^\d{3}\.\d{3}\.\d{3}-\d{2}$/;
+  return pattern.test(cpfInput.value);
+}
+
+// Event listeners para chamar as funções de formatação e validação ao digitar nos campos
+document.getElementById('cpf').addEventListener('input', formatCPFInput);
+document.getElementById('cardNumber').addEventListener('input', formatCardNumberInput);
+
+// Event listener para validar o formulário antes de enviar
+document.getElementById('productForm').addEventListener('submit', function(event) {
+  var paymentMethod = document.getElementById('paymentMethod').value;
+  if ((paymentMethod === 'credit' || paymentMethod === 'debit') && !isValidCardNumber()) {
+      event.preventDefault(); // Impede o envio do formulário se o número do cartão for inválido
   }
 
-  function updateCartItemCount(count) {
-    cartItemCount.textContent = count;
+  if ((paymentMethod === 'credit' || paymentMethod === 'debit') && !isValidCPF()) {
+      event.preventDefault(); // Impede o envio do formulário se o CPF for inválido
   }
-
-  function updateCartItemList() {
-    cartItemsList.innerHTML = '';
-    let totalPrice = 0;
-    cartItems.forEach((item, index) => {
-      const cartItem = document.createElement('div');
-      cartItem.classList.add('cart-item', 'individual-cart-item');
-
-      const itemTotalPrice = item.price * item.quantity;
-      totalPrice += itemTotalPrice;
-
-      cartItem.innerHTML = `
-        <span>(${item.quantity}x) ${item.name}</span>
-        <span class="cart-item-price">$${itemTotalPrice.toFixed(2)}</span>
-        <button class="remove-btn" data-index="${index}"><i class="fa-solid fa-times"></i></button>
-      `;
-      cartItemsList.appendChild(cartItem);
-    });
-
-    const removeButtons = document.querySelectorAll('.individual-cart-item .remove-btn');
-    removeButtons.forEach((button) => {
-      button.addEventListener('click', (event) => {
-        const index = parseInt(event.target.parentElement.dataset.index);
-        removeItemFromCart(index);
-      });
-    });
-  }
-
-  function removeItemFromCart(index){
-    const removeItem = cartItems.splice(index, 1)[0];
-    totalAmount -= removeItem.price * removeItem.quantity;
-    updateCartUI(); 
-  }
-
-  function updateCartTotal() {
-    cartTotal.textContent = `$${totalAmount.toFixed(2)}`;
-  }
-
-  cartIcon.addEventListener('click', () => {
-    sidebar.classList.toggle('open');
-  });
-
-  const closeButton = document.querySelector('.sidebar-close');
-  closeButton.addEventListener('click', () => {
-    sidebar.classList.remove('open');
-  });
-
-  const checkoutButton = document.querySelector('.checkout-btn');
-  checkoutButton.addEventListener('click', () => {
-    // Oculta a tag <main>, a div com a classe cover e a classe .element-to-hide ao clicar no botão de checkout
-    mainElement.style.display = 'none';
-    coverElement.style.display = 'none';
-    otherElementToHide.style.display = 'none';
-
-    // Exibe o modal
-    section.style.display = 'block';
-
-    // Abrir uma nova aba com a página de checkout
-    
-  });
 });
