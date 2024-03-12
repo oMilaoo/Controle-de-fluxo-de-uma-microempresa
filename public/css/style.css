@@ -238,7 +238,7 @@ body {
     margin-top: 1rem;
 }
 
-.cart-tems {
+.individual-cart-item {
     display: flex;
     justify-content: space-between;
     padding: 10px 5px;
@@ -272,6 +272,20 @@ body {
     font-weight: 500;
 }
 
+.frete--amount {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 2px solid var(--decent-color);
+    border-radius: 5px;
+    padding: 15px 10px;
+}
+
+.frete-total{
+    font-size: 16px;
+    color: var(--primary-color);
+    font-weight: 500;
+}
 .checkout-btn{
     width: 100%;
     margin-top: 2rem;
@@ -280,4 +294,23 @@ body {
     border-radius: 5px;
     cursor: pointer;
     padding: 10px;
+}
+
+.container{
+    border: 2px solid var(--primary-color);
+    background-size: cover;
+    height: 40vh;
+    border-radius: 10px;
+    margin-top: 10px;
+}
+
+.cover--overlay{
+    background: rgba(0, 0, 0, 0.6);
+    height: 100%;
+    color: var(--accent-color);
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 10px;
 }

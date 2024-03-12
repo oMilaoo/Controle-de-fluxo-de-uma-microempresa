@@ -11,14 +11,14 @@
         <header class="header">
             <nav class="header-menu">
                 <div class="burguer--icon">
-                <i class="fa-solid fa-bars"></i>
+                <img src="../src/logo.png" alt="">
                 </div>
                 <div class="search--box">
                     <i class="fa-solid fa-magnifying-glass"></i>
                     <input type="text" placeholder="Pesquisar">
                 </div>
                 <div class="menu--icons">
-                    <i class="fa-solid fa-bowl-food"></i>
+                   
                     <div class="cart-icon">
                         <i class="fa-solid fa-cart-shopping"></i>
                         <span>0</span>
@@ -43,7 +43,7 @@
                     <h5>Teclado</h5>
                 </div>
                 <div class="menu--item">
-                    <img src=".././src/monitor.jpg" style="width: 100px; height: 80px;" alt="">
+                    <img src=".././src/monitor.jpg" style="width: 120px; height: 80px;" alt="">
                     <h5>Monitor</h5>
                 </div>
                 <div class="menu--item">
@@ -136,7 +136,7 @@
                    <h4 class="card--title">Placa Mãe Gigabyte H510M H </h4>
 
                     <div class="card--price">
-                    <div class="price">R$280</div>
+                    <div class="price">R$260</div>
                     <i class="fa-solid fa-plus add-to-cart"></i>
                     </div>
                 </div>
@@ -150,18 +150,26 @@
                 </div>
                     <div class="cart-menu">
                         <h3>Meu carrinho</h3>
-                        <div class="cart-tems">teste1</div>
+                        <div class="cart-items"></div>
                     </div>
 
                     <div class="sidebar--footer">
+                        <div class="frete--amount" style="display: none;">
+                            <h5>frete</h5>
+                            <div class="frete-total">R$0,00</div>
+                            
+                        </div>
                         <div class="total--amount">
                             <h5>Total</h5>
                             <div class="cart-total">R$0,00</div>
+                            
                         </div>
-                        <button class="checkout-btn">Checkout</button>
+                        <button onclick="openNewPage() " class="checkout-btn" >Checkout</button>
                     </div>
                 
             </div>
         </main>
+
+        <script src="../public/script.js"></script>
     </body>
 </html>
