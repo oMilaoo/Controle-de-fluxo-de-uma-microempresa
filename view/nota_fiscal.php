@@ -36,8 +36,9 @@
                 <p><strong>Número:</strong> <?php echo $_POST['number']; ?></p>
                     
                 </div
+                <div class="linha-3">
                 <p><strong>Valor:</strong> <?php echo $_POST['valor']; ?></p>
-                
+                </div
                 </div>
             <button onclick="window.print()">Imprimir Nota Fiscal</button>
         </div>
