@@ -36,6 +36,7 @@
         </section>
 
         <main>
+            <div class="separeted">
             <h2 class="section-heading">Categorias</h2>
             <div class="menu--list">
                 <div class="menu--item">
@@ -143,33 +144,68 @@
 
             
             </div>
-
-            <div class="sidebar" id="sidebar">
-                <div class="sidebar-close">
-                    <i class="fa-solid fa-close"></i>
-                </div>
-                    <div class="cart-menu">
-                        <h3>Meu carrinho</h3>
-                        <div class="cart-items"></div>
-                    </div>
-
-                    <div class="sidebar--footer">
-                        <div class="frete--amount" style="display: none;">
-                            <h5>frete</h5>
-                            <div class="frete-total">R$0,00</div>
-                            
-                        </div>
-                        <div class="total--amount">
-                            <h5>Total</h5>
-                            <div class="cart-total">R$0,00</div>
-                            
-                        </div>
-                        <button onclick="openNewPage() " class="checkout-btn" >Checkout</button>
-                    </div>
-                
-            </div>
+        </div>
+            
         </main>
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-close">
+                <i class="fa-solid fa-close"></i>
+            </div>
+                <div class="cart-menu">
+                    <h3>Meu carrinho</h3>
+                    <div class="cart-items"></div>
+                </div>
 
+                <div class="sidebar--footer">
+                    <div class="frete--amount" style="display: none;">
+                        <h5>frete</h5>
+                        <div class="frete-total">R$0,00</div>
+                        
+                    </div>
+                    <div class="total--amount">
+                        <h5>Total</h5>
+                        <div class="cart-total">R$0,00</div>
+                        
+                    </div>
+                    <button onclick="openNewPage() " class="checkout-btn" >Checkout</button>
+                </div>
+            
+        </div>
+
+        <section class="modal"">
+            <div class="input-group">
+                <div class="input-box">
+                    <label for="firstname">Primeiro Nome</label>
+                    <input id="firstname" type="text" name="firstname" placeholder="Digite seu primeiro nome" required>
+                </div>
+
+                <div class="input-box">
+                    <label for="lastname">Sobrenome</label>
+                    <input id="lastname" type="text" name="lastname" placeholder="Digite seu sobrenome" required>
+                </div>
+                <div class="input-box">
+                    <label for="email">E-mail</label>
+                    <input id="email" type="email" name="email" placeholder="Digite seu e-mail" required>
+                </div>
+
+                <div class="input-box">
+                    <label for="cpf">CPF:</label>
+                    <input type="text" id="cpf" name="cpf" pattern="\d{3}\.\d{3}\.\d{3}-\d{2}" placeholder="000.000.000-00" required>
+                </div>
+
+                <div class="input-box">
+                    <label for="password">Senha</label>
+                    <input id="password" type="password" name="password" placeholder="Digite sua senha" required>
+                </div>
+
+
+                <div class="input-box">
+                    <label for="confirmPassword">Confirme sua Senha</label>
+                    <input id="confirmPassword" type="password" name="confirmPassword" placeholder="Digite sua senha novamente" required>
+                </div>
+
+            </div>
+        </section>
         <script src="../public/script.js"></script>
     </body>
 </html>

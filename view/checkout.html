@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Legends Store</title>
-    <link rel="stylesheet" href="../public/css/style.css">
+    <link rel="stylesheet" href="../public/css/check.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 </head
 <body>
@@ -27,13 +27,54 @@
         </nav>
     </header>
 
-    <section class="container">
-        <div class="form">
-            <input type="text">
-            <h1>Finalize sua Compra</h1>
-            <span class="slogan">Melhore seu setup</span>
-
-        </div>
-    </section>
+    
+    <div class="container">
+        
+        <h2>Produtos</h2>
+        <form id="productForm" action="dados_cliente.php" method="POST">
+            <div class="linha">
+                <div>
+                    <label for="productName">Nome do Produto:</label>
+                    <input type="text" class="productName" id="productName" name="productName" required>
+                </div>
+            
+            <div>
+                <label for="quantity">Quantidade:</label>
+                <input type="number" class="qtdName" id="quantity" name="quantity" required>
+            </div>
+            
+            <div>
+                <label for="model">Modelo:</label>
+                <input type="text" class="mdlName" id="model" name="model">
+            </div>
+            </div>
+            <div class="linha">
+            <div>
+                <label for="color">Cor:</label>
+                <input type="text" class="CorName" id="color" name="color">
+            </div>
+            <div>
+                <label for="valor">Valor:</label>
+                <input type="text" class="numName" id="valor" name="valor" required>
+            </div>
+            <div>
+                <label for="paymentMethod">Forma de Pagamento:</label>
+                <select id="paymentMethod" class="pgtName" name="paymentMethod" onchange="toggleCardInput()" required>
+                    <option value="">Selecione uma opção</option>
+                    <option value="credit">Cartão de Crédito</option>
+                    <option value="debit">Cartão de Débito</option>
+                    <option value="cash">Dinheiro</option>
+                    <option value="pix">Pix</option>
+                </select>
+            </div>
+            </div>
+            <div id="cardNumberInput" style="display: none;">
+                <label for="cardNumber">Número do Cartão:</label>
+                <input type="text" id="cardNumber" name="cardNumber" placeholder="XXXX XXXX XXXX XXXX" pattern="[0-9]{4} [0-9]{4} [0-9]{4} [0-9]{4}">
+            </div>
+            <button type="submit">Continuar</button>
+        </form>
+    </div>
+</div>
 </body>
 </html>

@@ -5,6 +5,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const cartTotal = document.querySelector('.cart-total');
   const cartIcon = document.querySelector('.cart-icon');
   const sidebar = document.getElementById('sidebar');
+  const mainElement = document.querySelector('main'); // Seleciona a tag main
+  const coverElement = document.querySelector('.cover'); // Seleciona a div com a classe cover
+  const otherElementToHide = document.querySelector('.element-to-hide'); // Seleciona o elemento que deseja ocultar
+  const modal = document.getElementById('modal'); // Seleciona o modal
 
   let cartItems = [];
   let totalAmount = 0;
@@ -91,7 +95,16 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   const checkoutButton = document.querySelector('.checkout-btn');
-checkoutButton.addEventListener('click', () => {
-  window.open('checkout.html');
-});
+  checkoutButton.addEventListener('click', () => {
+    // Oculta a tag <main>, a div com a classe cover e a classe .element-to-hide ao clicar no botão de checkout
+    mainElement.style.display = 'none';
+    coverElement.style.display = 'none';
+    otherElementToHide.style.display = 'none';
+
+    // Exibe o modal
+    section.style.display = 'block';
+
+    // Abrir uma nova aba com a página de checkout
+    
+  });
 });
