@@ -92,6 +92,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const checkoutButton = document.querySelector('.checkout-btn');
 checkoutButton.addEventListener('click', () => {
-  window.open('checkout.html');
+  window.open("http://localhost/controle-de-fluxo-de-uma-microempresa/view/checkout.html");
 });
 });
